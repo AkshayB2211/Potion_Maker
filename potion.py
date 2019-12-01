@@ -13,15 +13,8 @@ GEMIMAGESIZE = 64       # width & height of each space in pixels
 NUMGEMIMAGES = 7
 GEMOFFSET = 3
 
-# NUMMATCHSOUNDS is the number of different sounds to choose from when
-# a match is made. The .wav files are named match0.wav, match1.wav, etc.
-NUMMATCHSOUNDS = 6
-
-MOVERATE = 25 # 1 to 100, larger num means faster animations
-DEDUCTSPEED = 0.8 # reduces score by 1 point every DEDUCTSPEED seconds.
-
 EMPTY_SPACE = -1        # an arbitrary, nonpositive value
-ROWABOVEBOARD = 'row above board' # an arbitrary, noninteger value
+ROWABOVEBOARD = None	# an arbitrary, noninteger value
 
 # constants for direction values
 UP = 'up'
@@ -32,15 +25,9 @@ RIGHT = 'right'
 PURPLE    = (255,   0, 255)
 LIGHTBLUE = (170, 190, 255)
 BLUE      = (  0,   0, 255)
-RED       = (255, 100, 100)
-BLACK     = (  0,   0,   0)
-BROWN     = ( 85,  65,   0)
 HIGHLIGHTCOLOR = PURPLE         # color of the selected gem's border
 BGCOLOR = LIGHTBLUE             # background color on the screen
 GRIDCOLOR = BLUE                # color of the game board
-GAMEOVERCOLOR = RED             # color of the "Game over" text.
-GAMEOVERBGCOLOR = BLACK         # background color of the "Game over" text.
-SCORECOLOR = BROWN              # color of the text for the player's score
 
 XMARGIN = int((WINDOWWIDTH - GEMIMAGESIZE * BOARDWIDTH) / 2)
 YMARGIN = int((WINDOWHEIGHT - GEMIMAGESIZE * BOARDHEIGHT) / 2)
@@ -58,17 +45,10 @@ def main():
 	# Load the images
 	GEMIMAGES = []
 	for i in range(1, NUMGEMIMAGES+1):
-		gemImage = pygame.image.load('gem%s.png' % i)
+		gemImage = pygame.image.load('assets/gem%s.png' % i)
 		if gemImage.get_size() != (GEMIMAGESIZE, GEMIMAGESIZE):
 			gemImage = pygame.transform.smoothscale(gemImage, (GEMIMAGESIZE, GEMIMAGESIZE))
 		GEMIMAGES.append(gemImage)
-
-	# Load the sounds.
-	GAMESOUNDS = {}
-	GAMESOUNDS['bad swap'] = pygame.mixer.Sound('badswap.wav')
-	GAMESOUNDS['match'] = []
-	for i in range(NUMMATCHSOUNDS):
-		GAMESOUNDS['match'].append(pygame.mixer.Sound('match%s.wav' % i))
 
 	# Create pygame.Rect objects for each board space to
 	# do board-coordinate-to-pixel-coordinate conversions.
